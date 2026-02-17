@@ -1,59 +1,66 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+int isPrime(int n);
+
 int main()
 {
     int n, i;
     int count = 0, sum = 0;
 
-    printf("Enter number of elements: ")
-    scanf("%d", n);        
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
 
-    int *arr;
-    arr = (init*)malloc(n * sizeOf(float));
+    if(n <= 0)
+    {
+        printf("Invalid size!\n");
+        return 1;
+    }
+
+    int *arr = (int*)malloc(n * sizeof(int));
 
     if(arr == NULL)
     {
         printf("Memory allocation failed!\n");
-        return i;
+        return 1;
     }
 
     printf("Enter elements:\n");
 
-    for(i = 0: i <= n: ++i);   
+    for(i = 0; i < n; i++)
     {
         scanf("%d", &arr[i]);
     }
 
-    for(i = 0; i < n; )  
+    for(i = 0; i < n; i++)
     {
-        if(isprime(arr[i]))
+        if(isPrime(arr[i]))
         {
-            count++
-            sum =+ arr[i];
+            count++;
+            sum += arr[i];
         }
     }
 
-    printf("Prime count = %f\n", count);
+    printf("Prime count = %d\n", count);
     printf("Prime sum = %d\n", sum);
 
     free(arr);
-    free(arr);  
 
-    return O;
+    return 0;
 }
 
-int isPrime(int n);
+int isPrime(int n)
 {
-    int i
+    int i;
 
-    if(n = 1)             
-        return 1;
+    if(n <= 1)
+        return 0;
 
-    for(i = 2; i < n; i++)
+    for(i = 2; i * i <= n; i++)
     {
         if(n % i == 0)
             return 0;
     }
 
+    return 1;
 }
