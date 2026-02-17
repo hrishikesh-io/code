@@ -1,187 +1,201 @@
+
 # C Program Error Analysis
 
-## Total Errors: 22
+## Overview
+This document analyzes all syntax, logical, runtime, and semantic errors in the given C program that calculates the count and sum of prime numbers from an array.
 
-This document lists all syntax, logical, and structural errors found in
-the given C program.
+---
 
-------------------------------------------------------------------------
+## 1. Missing Semicolon
 
-## Error List
-
-### 1. Missing Semicolon
-
-``` c
+Error:
 printf("Enter number of elements: ")
-```
 
-### 2. Missing `&` in scanf
+Correction:
+printf("Enter number of elements: ");
 
-``` c
+---
+
+## 2. Wrong scanf Usage
+
+Error:
 scanf("%d", n);
-```
 
-### 3. Wrong Type Casting
+Correction:
+scanf("%d", &n);
 
-``` c
-arr = (init*)malloc(...);
-```
+---
 
-### 4. Wrong `sizeof` Usage
+## 3. Wrong malloc Syntax
 
-``` c
-sizeOf(float)
-```
+Error:
+arr = (init*)malloc(n * sizeOf(float));
 
--   Incorrect spelling (`sizeOf`)
--   Allocating `float` for `int*`
+Issues:
+- init* is invalid
+- sizeOf should be sizeof
+- float should be int
 
-### 5. Wrong Return Value
+Correction:
+arr = (int*)malloc(n * sizeof(int));
 
-``` c
+---
+
+## 4. Wrong Return Value
+
+Error:
 return i;
-```
 
-### 6. Incorrect `for` Loop Syntax
+Correction:
+return 1;
 
-``` c
+---
+
+## 5. Wrong for Loop Syntax
+
+Error:
 for(i = 0: i <= n: ++i);
-```
 
--   `:` used instead of `;`
+Correction:
+for(i = 0; i < n; i++)
 
-### 7. Extra Semicolon After Loop
+---
 
-``` c
-for(...);
-```
+## 6. Infinite Loop
 
-### 8. Incorrect Loop Condition
-
-``` c
-i <= n
-```
-
-Should be `< n`
-
-### 9. Function Name Mismatch
-
-``` c
-isprime()
-```
-
-Defined as:
-
-``` c
-isPrime()
-```
-
-### 10. Missing Semicolon
-
-``` c
-count++
-```
-
-### 11. Wrong Operator
-
-``` c
-sum =+ arr[i];
-```
-
-Should be:
-
-``` c
-sum += arr[i];
-```
-
-### 12. Infinite Loop
-
-``` c
+Error:
 for(i = 0; i < n; )
-```
 
-Missing increment.
+Correction:
+for(i = 0; i < n; i++)
 
-### 13. Wrong printf Format Specifier
+---
 
-``` c
+## 7. Case Sensitivity Error
+
+Error:
+isprime(arr[i])
+
+Correction:
+isPrime(arr[i])
+
+---
+
+## 8. Missing Semicolon
+
+Error:
+count++
+
+Correction:
+count++;
+
+---
+
+## 9. Wrong Operator
+
+Error:
+sum =+ arr[i];
+
+Correction:
+sum += arr[i];
+
+---
+
+## 10. Wrong Format Specifier
+
+Error:
 printf("Prime count = %f\n", count);
-```
 
-Should use `%d`
+Correction:
+printf("Prime count = %d\n", count);
 
-### 14. Double Free
+---
 
-``` c
+## 11. Double Free
+
+Error:
 free(arr);
 free(arr);
-```
 
-### 15. Wrong Return Value
+Correction:
+free(arr);
 
-``` c
+---
+
+## 12. Wrong Return Statement
+
+Error:
 return O;
-```
 
-Should be:
-
-``` c
+Correction:
 return 0;
-```
 
-### 16. Extra Semicolon in Function Declaration
+---
 
-``` c
+## 13. Wrong Function Definition
+
+Error:
 int isPrime(int n);
-```
+{
 
-### 17. Missing Semicolon
+Correction:
+int isPrime(int n)
+{
 
-``` c
+---
+
+## 14. Missing Semicolon in Function
+
+Error:
 int i
-```
 
-### 18. Assignment Instead of Comparison
+Correction:
+int i;
 
-``` c
+---
+
+## 15. Assignment Instead of Comparison
+
+Error:
 if(n = 1)
-```
 
-Should be:
-
-``` c
+Correction:
 if(n == 1)
-```
 
-### 19. Incorrect Prime Logic
+Better:
+if(n <= 1)
+    return 0;
 
-``` c
-if(n == 1)
-    return 1;
-```
+---
 
-1 is not prime.
+## 16. Missing Return in Function
 
-### 20. Missing Return Statement
+Correction:
+return 1;
 
-`isPrime()` does not return a value in all cases.
+---
 
-### 21. Function Used Before Proper Prototype
+## 17. Function Prototype Placement
 
-No correct function declaration before `main()`.
+Should be declared before main():
+int isPrime(int n);
 
-### 22. Memory Allocation Type Mismatch
+---
 
-Allocating `float` size for an `int*` pointer.
+## 18. Logical Error – 1 is Not Prime
 
-------------------------------------------------------------------------
+Correction:
+if(n <= 1)
+    return 0;
 
-## Summary
+---
 
--   Syntax Errors\
--   Logical Errors\
--   Memory Errors\
--   Format Specifier Errors\
--   Loop Structure Errors
+## Total Errors Identified: 18+
 
-Total: **22 Errors**
+Includes:
+- Syntax errors
+- Logical errors
+- Runtime errors
+- Memory allocation mistakes
+- Case sensitivity issues
+- Operator mistakes
